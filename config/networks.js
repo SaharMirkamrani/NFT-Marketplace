@@ -3,12 +3,13 @@ const { config: dotenvConfig } = require("dotenv");
 
 dotenvConfig({ path: resolve(__dirname, "../.env") });
 
-const INFURA_KEY = process.env.INFURA_PROJECT_ID;
-if (typeof INFURA_KEY === "undefined") {
-  throw new Error(`INFURA_PROJECT_ID must be a defined environment variable`);
+const ALCHEMY_KEY = process.env.ALCHEMY_API_KEY_URL;
+if (typeof ALCHEMY_KEY === "undefined") {
+  throw new Error(`ALCHEMY_API_KEY_URL must be a defined environment variable`);
 }
 
-const infuraUrl = (network) => `https://${network}.infura.io/v3/${INFURA_KEY}`;
+const alchemyUrl = (network) =>
+  `https://eth-${network}.alchemyapi.io/v2/${ALCHEMY_KEY}`;
 
 /**
  * All supported network names
@@ -24,23 +25,23 @@ const networks = {
   // ETHEREUM
   mainnet: {
     chainId: 1,
-    url: infuraUrl("mainnet"),
+    url: alchemyUrl("mainnet"),
   },
   kovan: {
     chainId: 42,
-    url: infuraUrl("kovan"),
+    url: alchemyUrl("kovan"),
   },
   goerli: {
     chainId: 5,
-    url: infuraUrl("goerli"),
+    url: alchemyUrl("goerli"),
   },
   rinkeby: {
     chainId: 4,
-    url: infuraUrl("rinkeby"),
+    url: alchemyUrl("rinkeby"),
   },
   ropsten: {
     chainId: 3,
-    url: infuraUrl("ropsten"),
+    url: alchemyUrl("ropsten"),
   },
   sepolia: {
     chainId: 11155111,
@@ -60,31 +61,31 @@ const networks = {
   // MATIC/POLYGON
   "polygon-mainnet": {
     chainId: 137,
-    url: infuraUrl("polygon-mainnet"),
+    url: alchemyUrl("polygon-mainnet"),
   },
   "polygon-mumbai": {
     chainId: 80001,
-    url: infuraUrl("polygon-mumbai"),
+    url: alchemyUrl("polygon-mumbai"),
   },
 
   // OPTIMISM
   "optimism-mainnet": {
     chainId: 10,
-    url: infuraUrl("optimism-mainnet"),
+    url: alchemyUrl("optimism-mainnet"),
   },
   "optimism-kovan": {
     chainId: 69,
-    url: infuraUrl("optimism-kovan"),
+    url: alchemyUrl("optimism-kovan"),
   },
 
   // ARBITRUM
   "arbitrum-mainnet": {
     chainId: 42161,
-    url: infuraUrl("arbitrum-mainnet"),
+    url: alchemyUrl("arbitrum-mainnet"),
   },
   "arbitrum-rinkeby": {
     chainId: 421611,
-    url: infuraUrl("arbitrum-rinkeby"),
+    url: alchemyUrl("arbitrum-rinkeby"),
   },
 
   // AVALANCHE

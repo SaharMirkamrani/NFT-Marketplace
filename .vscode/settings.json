@@ -1,6 +1,5 @@
 {
   "editor.rulers": [80],
-  "files.autoSave": "off",
   "editor.formatOnSave": true,
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
