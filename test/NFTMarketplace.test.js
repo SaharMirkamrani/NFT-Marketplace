@@ -32,6 +32,7 @@ const { developmentChains } = require("../config/networks");
 
       describe("listItem", function () {
         it("emits an event after listing an item", async function () {
+          console.log(basicNft.address)
           expect(
             await nftMarketplace.listItem(basicNft.address, TOKEN_ID, PRICE)
           ).to.emit("ItemListed");
@@ -50,7 +51,6 @@ const { developmentChains } = require("../config/networks");
           nftMarketplace = await nftMarketplace.connect(user);
 
           await basicNft.approve(user.address, TOKEN_ID);
-          console.log(user.address)
           await expect(
             nftMarketplace.listItem(basicNft.address, TOKEN_ID, PRICE)
           ).to.be.revertedWith("NotOwner");

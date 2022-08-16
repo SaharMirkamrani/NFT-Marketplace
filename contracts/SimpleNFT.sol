@@ -22,24 +22,12 @@ contract SimpleNFT is ERC721, Ownable {
     uint256 public maxMintAmountPerTx = 5;
 
     bool public paused = false;
-    bool public revealed = false;
+    bool public revealed = true;
 
     constructor() ERC721("Cool Bananas", "CBAN") {
         setHiddenMetadataUri(
             "ipfs://QmbpgmgWo4zJ74tMbqLV8rTDvpDre2T1VXznw3QTNSczs5/hidden.json"
         );
-    }
-
-    modifier mintCompliance(uint256 _mintAmount) {
-        require(
-            _mintAmount > 0 && _mintAmount <= maxMintAmountPerTx,
-            "Invalid mint amount!"
-        );
-        require(
-            supply.current() + _mintAmount <= maxSupply,
-            "Max supply exceeded!"
-        );
-        _;
     }
 
     function totalSupply() public view returns (uint256) {
@@ -49,15 +37,12 @@ contract SimpleNFT is ERC721, Ownable {
     function mint() public payable {
         require(!paused, "The contract is paused!");
         require(msg.value >= cost, "Insufficient funds!");
-
+        supply.increment();
         _safeMint(msg.sender, supply.current());
     }
 
-    function mintForAddress(uint256 _mintAmount, address _receiver)
-        public
-        mintCompliance(_mintAmount)
-        onlyOwner
-    {
+    function mintForAddress(address _receiver) public onlyOwner {
+        supply.increment();
         _safeMint(_receiver, supply.current());
     }
 
@@ -155,13 +140,6 @@ contract SimpleNFT is ERC721, Ownable {
         (bool os, ) = payable(owner()).call{value: address(this).balance}("");
         require(os);
     }
-
-    // function _mintLoop(address _receiver, uint256 _mintAmount) internal {
-    //     for (uint256 i = 0; i < _mintAmount; i++) {
-    //         supply.increment();
-    //         _safeMint(_receiver, supply.current());
-    //     }
-    // }
 
     function _baseURI() internal view virtual override returns (string memory) {
         return uriPrefix;
