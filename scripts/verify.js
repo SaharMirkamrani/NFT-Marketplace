@@ -11,10 +11,7 @@ async function main() {
   const contractPath = `contracts/${contractName}.sol:${contractName}`;
   const contractAddress = "";
   const args = [
-    "TokenName",
-    "TCT",
-    toWei("6000000"),
-    "0xde43f899587aaa2Ea6aD243F3d68a5027F2C6a94",
+    "0x5FbDB2315678afecb367f032d93F642f64180aa3",
   ];
 
   // You don't want to verify on localhost

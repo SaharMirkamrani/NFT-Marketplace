@@ -53,6 +53,13 @@ function getChainConfig(network) {
   };
 }
 
+const RINKEBY_RPC_URL =
+  process.env.ALCHEMY_API_KEY_UR ||
+  "https://eth-rinkeby.alchemyapi.io/v2/z2S5T71I17T9C0ksKGpXagl7DCseFrXk";
+
+const PRIVATE_KEY_2 = process.env.PRIVATE_KEY_2 || "0x";
+const PRIVATE_KEY_1 = process.env.PRIVATE_KEY_1 || "0x";
+
 module.exports = {
   contractSizer: {
     alphaSort: true,
@@ -83,42 +90,48 @@ module.exports = {
   networks: {
     // LOCAL
     hardhat: { chainId: 31337 },
-    "truffle-dashboard": {
-      url: "http://localhost:24012/rpc",
+    rinkeby: {
+      url: RINKEBY_RPC_URL,
+      accounts: PRIVATE_KEY_2 !== undefined ? [PRIVATE_KEY_2] : [],
+
+      //   accounts: {
+      //     mnemonic: MNEMONIC,
+      //   },
+      saveDeployments: true,
+      chainId: 4,
     },
-    ganache: { chainId: 1337, url: "http://127.0.0.1:7545" },
 
     // ETHEREUM
-    mainnet: getChainConfig("mainnet"),
-    kovan: getChainConfig("kovan"),
-    goerli: getChainConfig("goerli"),
-    rinkeby: getChainConfig("rinkeby"),
-    ropsten: getChainConfig("ropsten"),
-    sepolia: getChainConfig("sepolia"),
+    // mainnet: getChainConfig("mainnet"),
+    // kovan: getChainConfig("kovan"),
+    // goerli: getChainConfig("goerli"),
+    // rinkeby: getChainConfig("rinkeby"),
+    // ropsten: getChainConfig("ropsten"),
+    // sepolia: getChainConfig("sepolia"),
 
-    // BINANCE SMART CHAIN
-    bsc: getChainConfig("bsc"),
-    "bsc-testnet": getChainConfig("bsc-testnet"),
+    // // BINANCE SMART CHAIN
+    // bsc: getChainConfig("bsc"),
+    // "bsc-testnet": getChainConfig("bsc-testnet"),
 
-    // MATIC/POLYGON
-    "polygon-mainnet": getChainConfig("polygon-mainnet"),
-    "polygon-mumbai": getChainConfig("polygon-mumbai"),
+    // // MATIC/POLYGON
+    // "polygon-mainnet": getChainConfig("polygon-mainnet"),
+    // "polygon-mumbai": getChainConfig("polygon-mumbai"),
 
-    // OPTIMISM
-    "optimism-mainnet": getChainConfig("optimism-mainnet"),
-    "optimism-kovan": getChainConfig("optimism-kovan"),
+    // // OPTIMISM
+    // "optimism-mainnet": getChainConfig("optimism-mainnet"),
+    // "optimism-kovan": getChainConfig("optimism-kovan"),
 
-    // ARBITRUM
-    "arbitrum-mainnet": getChainConfig("arbitrum-mainnet"),
-    "arbitrum-rinkeby": getChainConfig("arbitrum-rinkeby"),
+    // // ARBITRUM
+    // "arbitrum-mainnet": getChainConfig("arbitrum-mainnet"),
+    // "arbitrum-rinkeby": getChainConfig("arbitrum-rinkeby"),
 
-    // AVALANCHE
-    "avalanche-mainnet": getChainConfig("avalanche-mainnet"),
-    "fuji-avalance": getChainConfig("fuji-avalance"),
+    // // AVALANCHE
+    // "avalanche-mainnet": getChainConfig("avalanche-mainnet"),
+    // "fuji-avalance": getChainConfig("fuji-avalance"),
 
-    // FANTOM
-    "fantom-mainnet": getChainConfig("fantom-mainnet"),
-    "fantom-testnet": getChainConfig("fantom-testnet"),
+    // // FANTOM
+    // "fantom-mainnet": getChainConfig("fantom-mainnet"),
+    // "fantom-testnet": getChainConfig("fantom-testnet"),
   },
   paths: {
     artifacts: "./artifacts",
@@ -137,9 +150,8 @@ module.exports = {
             bytecodeHash: "none",
           },
           // Disable the optimizer when debugging
-          // https://hardhat.org/hardhat-network/#solidity-optimizer-support
           optimizer: {
-            enabled: true,
+            enabled: false,
             runs: 200,
           },
         },

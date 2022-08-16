@@ -109,6 +109,9 @@ const networks = {
   },
 };
 
+const developmentChains = ["hardhat", "localhost"]
+
 module.exports = {
   networks,
+  developmentChains
 };
